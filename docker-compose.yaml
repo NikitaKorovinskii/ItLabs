@@ -1,0 +1,32 @@
+version: '2.1'
+services:
+  test-container:
+    build:
+      context: .
+    environment:
+      - PORT=1234
+    ports:
+      - "3002:1234"
+    volumes:
+      - C:/Users/79115/Desktop/Уроки/Docker/src:/app/logs
+  db:
+    container_name: postgres
+    image: postgres:alpine
+    restart: always
+    environment:
+       POSTGRES_PASSWORD: 9090
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data:/var/lib/postgresql/data
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 80:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=9090
